@@ -6,3 +6,12 @@ src/clib/*
 *.aux
 .lia.cache
 **Makefile*coq*
+.direnv
+*.csv
+*.c
+*.h
+*.o
+\!!!
+*_eq
+*_time
+*.a

@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 sed -i 's/"//g' $1
 sed -i 's/@/"/g' $1
 sed -i 's/~/\\n/g' $1
@@ -11,11 +13,11 @@ out_to_c() {
 	sed -i '1d' $1
 
 	NAME=$(head -n 1 $1)
-	NAME="${NAME%"${NAME##*[![:space:]]}"}"  
+	NAME="${NAME%"${NAME##*[![:space:]]}"}"
 
 	tail -n +2 $1 > $NAME
 
-	
+
 
 	rm $1
 }

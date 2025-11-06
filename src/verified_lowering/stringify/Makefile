@@ -17,9 +17,9 @@ lib: coq MakefileLib.coq
 			$(MAKE) -C lib libscheds.a
 
 test: coq MakefileTest.coq
-	        $(MAKE) -f MakefileTest.coq > test/gen.out
+	    $(MAKE) -f MakefileTest.coq > test/gen.out
 			$(MAKE) -C test scrub
-			$(MAKE) -C test	
+			$(MAKE) -C test
 
 MakefileTest.coq: Makefile GenTest.v
 	        coq_makefile -R ../../verified_scheduling/codegen Codegen -R ../../verified_scheduling/atl ATL -R ../../examples Examples -R . Test GenTest.v -o MakefileTest.coq 2> /dev/null
@@ -29,7 +29,7 @@ MakefileLib.coq: Makefile GenLib.v
 
 clean:
 	rm -f Makefile*.coq* *.vo *.vos *.vok *.glob
-	$(MAKE) -C lib clean	
-	$(MAKE) -C test clean	
+	$(MAKE) -C lib clean
+	$(MAKE) -C test clean
 
 

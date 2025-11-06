@@ -7,7 +7,7 @@ STEMS	:= $(wildcard *.c)
 OBJECTS := $(patsubst %.c,%.o, $(STEMS))
 
 libscheds.a: $(OBJECTS)
-	ar rc $@ $^ 
+	ar rc $@ $^
 	ranlib $@
 
 %.o: %.c
@@ -16,7 +16,7 @@ libscheds.a: $(OBJECTS)
 .PHONY: clean scrub
 
 scrub:
-	./cleanoutput.sh $(GENFILE)
+# 	./cleanoutput.sh $(GENFILE)
 
 clean:
 	rm -f *.o a.out core main *.a *.c *.h *.BAK
