@@ -17,7 +17,7 @@ Import ListNotations.
 From ATL Require Import ATL Map Sets FrapWithoutSets Div Tactics.
 From Lower Require Import
      Zexpr Bexpr Array Range Sexpr Result ListMisc Meshgrid VarGeneration
-     Injective Constant InterpretReindexer 
+     Injective Constant InterpretReindexer
      WellFormedEnvironment WellFormedReindexer WellFormedAllocation
      ResultToArrayDelta ContextsAgree Pad ATLDeep.
 
@@ -101,7 +101,7 @@ Proof.
   - intros. cases x. propositional.
     erewrite result_has_shape_result_shape_Z in H0 by eauto.
     repeat decomp_index.
-    rewrite <- (Z2Nat.id (eval_Zexpr_Z_total $0 k)) at 1 by lia. 
+    rewrite <- (Z2Nat.id (eval_Zexpr_Z_total $0 k)) at 1 by lia.
     rewrite <- (Z2Nat.id (eval_Zexpr_Z_total $0 k)) at 2 by lia.
     erewrite result_lookup_Z_option_split. reflexivity.
     repeat decomp_index. eauto. lia. apply H0. lia.
@@ -169,7 +169,7 @@ Proof.
     eapply constant_nonneg_bounds_size_of_nonneg in Hconst; eauto.
     2: { eapply forall_no_vars_eval_Zexpr_Z_total with (v:=v).
          eapply constant_nonneg_bounds_size_of_no_vars; eauto. }
-    invert Hconst. lia. lia. 
+    invert Hconst. lia. lia.
     eapply constant_nonneg_bounds_size_of_nonneg in Hconst; eauto.
     2: { eapply forall_no_vars_eval_Zexpr_Z_total with (v:=v).
          eapply constant_nonneg_bounds_size_of_no_vars; eauto. }
@@ -245,7 +245,7 @@ Lemma assign_no_overwrite_array_add_shift_top_dim_reindexer :
        (partial_result_to_array_delta
           (partial_interpret_reindexer
              (fun l5 : list (Zexpr * Zexpr) =>
-              reindexer (((! i ! - lo)%z, (hi - lo)%z) :: l5)) 
+              reindexer (((! i ! - lo)%z, (hi - lo)%z) :: l5))
              (result_shape_Z r) (v $+ (i, eval_Zexpr_Z_total $0 lo))) r))) p
     (shift_top_dim_reindexer reindexer) (V l) v asm.
 Proof.
@@ -288,7 +288,7 @@ Proof.
        repeat decomp_index.
        erewrite
          eq_partial_interpret_reindexer_shift_top_dim_reindexer
-                   in H0,H; try apply Hrdx; eauto. 2: apply Henv. 
+                   in H0,H; try apply Hrdx; eauto. 2: apply Henv.
        2: { cases l. inversion 1. simpl in *. lia. inversion 1. }
        2: apply Henv.
        2: { cases l. inversion 1. simpl in *. lia. inversion 1. }
@@ -400,7 +400,7 @@ Qed.
 
 Lemma assign_no_overwrite_alloc_stack :
   forall st h'0 p sh v x e1 e2 ec reindexer l2 asm r1,
-    well_formed_environment st h'0 p sh v 
+    well_formed_environment st h'0 p sh v
                             ((constant [x] \cup vars_of e1) \cup vars_of e2) ec ->
     assign_no_overwrite st h'0 p reindexer l2 v asm ->
     assign_no_overwrite (st $+ (x, 0%R)) h'0 x (fun l => l)
@@ -567,7 +567,7 @@ Proof.
   - rewrite lookup_add_eq in * by auto. invert H1.
     erewrite lookup_array_add_weak_l.
     2: { erewrite result_has_shape_result_shape_Z by eauto.
-         erewrite size_of_sizeof in * by eauto. simpl in H4. 
+         erewrite size_of_sizeof in * by eauto. simpl in H4.
          erewrite result_has_shape_result_shape_Z in H4 by eauto.
          unfold partial_result_to_array_delta,
            partial_result_to_array_delta_by_indices in *.
@@ -730,7 +730,7 @@ Proof.
     2: apply Hrdx.
     2: { rewrite Z2Nat.id by lia. eauto. }
     erewrite result_has_shape_result_shape_Z by eauto. eexists x1.
-    split. auto. 
+    split. auto.
     erewrite result_has_shape_result_shape_Z in * by eauto.
     repeat decomp_index. eapply filter_In. split.
     repeat decomp_goal_index. split. lia. eauto.
@@ -744,7 +744,7 @@ Qed.
 Lemma assign_no_overwrite_transpose :
   forall e n0 m0 l0 st h p sh v ec l reindexer asm a,
     constant_nonneg_bounds e ->
-    eval_Zexprlist v (n0 :: m0 :: l0) 
+    eval_Zexprlist v (n0 :: m0 :: l0)
                    (eval_Zexpr_Z_total $0 n0
                                        :: eval_Zexpr_Z_total $0 m0
                                        :: map (eval_Zexpr_Z_total $0) l0) ->
@@ -820,7 +820,7 @@ Proof.
       2: { eapply result_has_shape_transpose_result. simpl in Hsh. eauto. }
       repeat decomp_index. eexists (z0::z::x0).
       split. auto. eapply filter_In. propositional.
-      repeat decomp_goal_index. propositional. 
+      repeat decomp_goal_index. propositional.
       repeat decomp_goal_index. propositional.
       rewrite <- H10. erewrite result_lookup_Z_option_transpose.
       reflexivity. lia. lia. eauto.
@@ -893,7 +893,7 @@ Proof.
     + intros. erewrite result_has_shape_result_shape_Z in H5.
       2: { eapply result_has_shape_flatten. eauto. }
       repeat decomp_index.
-      pose proof (Z_div_mod 
+      pose proof (Z_div_mod
                     z (Z.of_nat (Z.to_nat (eval_Zexpr_Z_total $0 m)))).
       assert (Z.of_nat (Z.to_nat (eval_Zexpr_Z_total $0 m)) > 0)%Z by lia.
       propositional.
@@ -901,7 +901,7 @@ Proof.
       invert H2. eexists (z0::z1::x0). rewrite Z.mul_comm.
       split. auto. erewrite result_has_shape_result_shape_Z by eauto.
       eapply filter_In. propositional.
-      repeat decomp_goal_index. propositional. 
+      repeat decomp_goal_index. propositional.
       assert (-1 * Z.of_nat (Z.to_nat (eval_Zexpr_Z_total $0 m)) <
                 z0 * Z.of_nat (Z.to_nat (eval_Zexpr_Z_total $0 m)))%Z
         by lia.
@@ -926,7 +926,7 @@ Proof.
                 z0 * Z.of_nat (Z.to_nat (eval_Zexpr_Z_total $0 m)))%Z
         by lia.
       eapply Zmult_lt_reg_r in H11.
-      lia. lia. 
+      lia. lia.
       rewrite Nat2Z.inj_mul in H10.
       rewrite
         (Z.mul_comm (Z.of_nat (Z.to_nat (eval_Zexpr_Z_total $0 n)))) in H10.
@@ -1007,7 +1007,7 @@ Proof.
     2: { simpl. right. eauto. }
     unfold partial_result_to_array_delta_by_indices in *. simpl in *.
     rewrite dom_empty in *. sets.
-  - eapply lookup_Some_dom in H1. sets. 
+  - eapply lookup_Some_dom in H1. sets.
 Qed.
 
 Lemma assign_no_overwrite_trunc_r :
@@ -1019,7 +1019,7 @@ Lemma assign_no_overwrite_trunc_r :
                  (truncl_list (Z.to_nat (eval_Zexpr_Z_total $0 k))
                     (repeat
                        (gen_pad (map Z.to_nat (map (eval_Zexpr_Z_total $0) l0)))
-                       (Z.to_nat (eval_Zexpr_Z_total $0 k)) ++ 
+                       (Z.to_nat (eval_Zexpr_Z_total $0 k)) ++
                      rev x)))) ->
     size_of e (m :: l0) ->
     result_has_shape
@@ -1055,7 +1055,7 @@ Proof.
          Hm Hl0 Hmknonneg Hlopos Hheap Hassign.
   unfold assign_no_overwrite in *. invs.
   split; intros.
-  - eapply H; eauto. simpl in *. 
+  - eapply H; eauto. simpl in *.
     unfold partial_result_to_array_delta in *.
     erewrite partial_eq_result_to_array_delta_by_indices_shuffle with
       (shuffle:=fun x => x) in H4. eassumption.
@@ -1224,7 +1224,7 @@ Proof.
       erewrite eq_partial_interpret_reindexer_truncl.
       erewrite result_has_shape_result_shape_Z.
       2: { simpl in Hsh. eapply result_has_shape_app_l; eauto. }
-      rewrite repeat_length. reflexivity. 
+      rewrite repeat_length. reflexivity.
       eapply vars_of_Zexpr_empty_eq_zexpr_eval_Zexpr_Z_total. eauto.
       apply Henv. apply Hrdx. apply Hrdx. apply Hrdx. apply Hrdx.
       lia. lia. lia.
@@ -1237,7 +1237,7 @@ Proof.
       rewrite <- H7. rewrite result_lookup_Z_option_concat_l. auto.
       lia. lia.
     + intros. erewrite result_has_shape_result_shape_Z in H5.
-      2: eauto. repeat decomp_index. 
+      2: eauto. repeat decomp_index.
       eexists (z- eval_Zexpr_Z_total $0 k::x3)%Z. propositional.
       f_equal. lia. eapply filter_In. propositional.
       erewrite result_has_shape_result_shape_Z.
@@ -1532,7 +1532,7 @@ Proof.
       repeat rewrite map_cons.
       eapply partial_injective_concat_l; auto; try apply Henv.
       repeat rewrite map_cons in Hinj. eapply Hinj.
-      eapply result_has_shape_repeat_gen_pad.               
+      eapply result_has_shape_repeat_gen_pad.
       rewrite Z2Nat.id by lia. auto.
     + decomp_partial_well_formed_reindexer. eauto.
     + unfold injective. propositional.
@@ -1597,7 +1597,7 @@ Proof.
     2: { eapply result_has_shape_concat.
          eapply result_has_shape_repeat.
          eapply result_has_shape_gen_pad. simpl in Hsh. eauto. }
-    auto. 
+    auto.
     eapply vars_of_Zexpr_empty_eq_zexpr_eval_Zexpr_Z_total. eauto.
     apply Henv. apply Hrdx. apply Hrdx. apply Hrdx. apply Hrdx.
   - erewrite result_has_shape_result_shape_Z by eauto. intros.
@@ -1617,7 +1617,7 @@ Proof.
          rewrite Z2Nat.inj_add by lia.
          eapply result_has_shape_concat.
          eapply result_has_shape_repeat.
-         eapply result_has_shape_gen_pad. simpl in Hsh. eauto. 
+         eapply result_has_shape_gen_pad. simpl in Hsh. eauto.
          eapply vars_of_Zexpr_empty_eq_zexpr_eval_Zexpr_Z_total.
          eauto.
          eapply vars_of_Zexpr_empty_eq_zexpr_eval_Zexpr_Z_total.
@@ -1647,7 +1647,7 @@ Proof.
          rewrite Z2Nat.inj_add by lia.
          eapply result_has_shape_concat.
          eapply result_has_shape_repeat.
-         eapply result_has_shape_gen_pad. simpl in Hsh. eauto. 
+         eapply result_has_shape_gen_pad. simpl in Hsh. eauto.
          eapply vars_of_Zexpr_empty_eq_zexpr_eval_Zexpr_Z_total.
          eauto.
          eapply vars_of_Zexpr_empty_eq_zexpr_eval_Zexpr_Z_total.
@@ -1897,7 +1897,7 @@ Proof.
     2: apply Hrdx.
     2: { rewrite Z2Nat.id by lia. eauto. }
     erewrite result_has_shape_result_shape_Z by eauto. eexists x1.
-    split. auto. 
+    split. auto.
     erewrite result_has_shape_result_shape_Z in * by eauto.
     repeat decomp_index. eapply filter_In. split.
     repeat decomp_goal_index. split. lia. eauto.

@@ -15,3 +15,7 @@ src/clib/*
 *_eq
 *_time
 *.a
+wrapper*
+test*
+.github/
+.vscode/

@@ -22,8 +22,13 @@
               pkgs.coq
               clang
               stdlib
-              vscoq-language-server
+              python3
+              rocqPackages.vsrocq-language-server
             ];
+
+            shellHook = ''
+              unset COQPATH
+            '';
           };
         }
     );

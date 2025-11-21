@@ -141,11 +141,11 @@ Theorem add_id {X} : forall (st : fmap string X) p v,
 Proof.
   intros.
   apply fmap_ext; intros.
-  cases (k ==v p); subst; 
+  cases (k ==v p); subst;
     try rewrite lookup_add_eq by auto;
     try rewrite lookup_add_ne by auto;
     auto.
-Qed.  
+Qed.
 
 Theorem add_arr_id {X} : forall (st : fmap Z X) p v,
     st $? p = Some v ->
@@ -157,7 +157,7 @@ Proof.
     try rewrite lookup_add_eq by auto;
     try rewrite lookup_add_ne by auto;
     auto.
-Qed.  
+Qed.
 
 Lemma add_overwrite {X} : forall (m : fmap string X) x a b,
     m $+ (x,a) $+ (x,b) = m $+ (x,b).
@@ -255,7 +255,7 @@ Proof.
   eapply includes_lookup in H1. 2: eassumption.
   eapply includes_lookup in H1. 2: eassumption.
   auto.
-Qed.  
+Qed.
 
 Lemma subset_cup_monotone {X} : forall (s1 s2 s3 s4 : set X),
     s1 \subseteq s3 ->
@@ -395,7 +395,7 @@ Proof.
   - simpl. rewrite IHdomain. rewrite dom_array_add.
     rewrite dom_add. rewrite dom_empty.
     sets.
-Qed.    
+Qed.
 
 Lemma lookup_array_add_l : forall a b k,
     k \in dom a ->
@@ -489,7 +489,7 @@ Proof.
       rewrite lookup_add_ne by auto.
       rewrite lookup_remove_ne by auto.
       reflexivity.
-Qed.  
+Qed.
 
 Lemma add_remove {Y} : forall k (arr : fmap string Y) x,
     arr $+ (k,x) $- k = arr $- k.
@@ -500,7 +500,7 @@ Proof.
   - repeat rewrite lookup_remove_ne by auto.
     rewrite lookup_add_ne by auto.
     reflexivity.
-Qed.  
+Qed.
 
 Lemma array_add_add_assoc : forall arr1 arr2 k x,
     ~ k \in dom arr2 ->
@@ -515,7 +515,7 @@ Proof.
     eapply None_dom_lookup in H. rewrite H. reflexivity.
   - repeat rewrite lookup_add_ne by auto.
     rewrite lookup_merge.
-    eapply None_dom_lookup in H. 
+    eapply None_dom_lookup in H.
     cases (arr1 $? k0); cases (arr2 $? k0); auto.
 Qed.
 
@@ -529,7 +529,7 @@ Proof.
   - subst. rewrite lookup_add_eq by auto. auto.
   - rewrite lookup_add_ne by auto.
     rewrite lookup_remove_ne by auto. reflexivity.
-Qed.  
+Qed.
 
 Lemma array_add_add : forall arr1 arr2 k x1 x2,
     array_add (arr1 $+ (k,x1)) (arr2 $+ (k,x2)) =
@@ -541,7 +541,7 @@ Proof.
   - subst. repeat rewrite lookup_add_eq by auto. reflexivity.
   - repeat rewrite lookup_add_ne by auto.
     rewrite lookup_merge. reflexivity.
-Qed.    
+Qed.
 
 Lemma remove_add_overwrite {Y} : forall (m : fmap Z Y) k x,
     m $- k $+ (k,x) = m $+ (k,x).
@@ -574,7 +574,7 @@ Proof.
     rewrite succ_nat_range_rec_app_end in *.
     simpl. posnats.
     rewrite map_app in *.
-    rewrite <- union_constant in *.    
+    rewrite <- union_constant in *.
     simpl map in H at 2. rewrite add_0_r in *. posnats.
     assert (Z.of_nat n \in dom arr). sets. rewrite H. sets.
     eapply dom_lookup_Some in H0. invs.
